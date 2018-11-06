@@ -11,7 +11,7 @@ const searchByCity = () => {
   fetch(cityURL) // <-----this is the promise, let promise = fetch(cityURL)
     .then(response => response.json()) // <----The response is what the promise returns, which we covert to json
     .then(weatherData => {
-      console.log(weatherData)
+      console.log(`Showing weather for ${selectedCity}`)
       // Do whatever we want under this
       let weatherList = document.querySelector('.weather-list')
 
@@ -30,9 +30,6 @@ const searchByCity = () => {
       let humidity = document.createElement('p')
       humidity.textContent = `Humidity: ${weatherData.main.humidity}`
       weatherList.appendChild(humidity)
-
-      console.log(weatherData.main.temp)
-      console.log(weatherData)
     })
 }
 
@@ -44,7 +41,7 @@ const searchByZip = () => {
   fetch(zipURL)
     .then(response => response.json())
     .then(weatherData => {
-      console.log(weatherData)
+      console.log(`Showing weather for ${selectedZip}`)
       let weatherList = document.querySelector('.weather-list')
 
       let temperature = document.createElement('p')
