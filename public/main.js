@@ -1,11 +1,10 @@
 const searchByCity = () => {
-  // Get the value of the user input, which takes place in the DOM
   let domUpdater = new DOMUpdater()
   let city = domUpdater.getUserInputForCity()
-  // Use the user's click to fetch the data for that city input
+
   let weatherAPI = new WeatherAPI()
   weatherAPI.fetchWeatherForCity(city)
-  // Display the forecast to the user (in the DOM)
+
   let weatherDisplay = new DOMUpdater()
   weatherDisplay.addForecastToDOM()
 }
@@ -13,8 +12,16 @@ const searchByCity = () => {
 const searchByZip = () => {
   let domUpdater = new DOMUpdater()
   let zip = domUpdater.getUserInputForZip()
+
   let weatherAPI = new WeatherAPI()
   weatherAPI.fetchWeatherForCity(zip)
+
+  let weatherDisplay = new DOMUpdater()
+  weatherDisplay.addForecastToDOM()
+}
+
+const refreshSearch = () => {
+  location.reload()
 }
 
 class DOMUpdater {
@@ -32,6 +39,8 @@ class DOMUpdater {
 
   addForecastToDOM(temp, high, low, hum) {
     let weatherList = document.querySelector('.weather-list')
+    weatherList.innerHTML = ''
+
     let temperature = document.createElement('p')
     temperature.textContent = `Temperature: ${temp}˚F`
     weatherList.appendChild(temperature)
@@ -47,6 +56,16 @@ class DOMUpdater {
     let humidity = document.createElement('p')
     humidity.textContent = `Humidity: ${hum}`
     weatherList.appendChild(humidity)
+
+    this.hideAllSearchOptions()
+  }
+
+  hideAllSearchOptions() {
+    let findCityHeader = document.querySelector('.search-area')
+    findCityHeader.classList.add('hidden')
+
+    let resetButton = document.querySelector('.reset')
+    resetButton.classList.remove('hidden')
   }
 }
 
@@ -93,6 +112,9 @@ const main = () => {
 
   let zipSearchButton = document.querySelector('.zip-search')
   zipSearchButton.addEventListener('click', searchByZip)
+
+  let resetButton = document.querySelector('.reset')
+  resetButton.addEventListener('click', refreshSearch)
 }
 
 document.addEventListener('DOMContentLoaded', main)
